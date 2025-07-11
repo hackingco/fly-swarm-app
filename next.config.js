@@ -10,6 +10,10 @@ const nextConfig = {
       bodySizeLimit: '2mb',
     },
   },
+  // Ensure environment variables are available at runtime
+  env: {
+    LANGFUSE_HOST: process.env.LANGFUSE_HOST || 'https://cloud.langfuse.com',
+  },
   headers: async () => {
     return [
       {

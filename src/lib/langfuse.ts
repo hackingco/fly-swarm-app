@@ -1,11 +1,13 @@
 import { Langfuse } from 'langfuse'
 import { LangfuseGenerationClient, LangfuseTraceClient } from 'langfuse'
+import { getLangfuseConfig } from './langfuse-client'
 
-// Initialize Langfuse client
+// Initialize Langfuse client with runtime configuration
+const config = getLangfuseConfig()
 export const langfuse = new Langfuse({
-  publicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
-  secretKey: process.env.LANGFUSE_SECRET_KEY || '',
-  baseUrl: process.env.LANGFUSE_HOST || 'https://cloud.langfuse.com',
+  publicKey: config.publicKey,
+  secretKey: config.secretKey,
+  baseUrl: config.baseUrl,
   flushAt: 1,
   flushInterval: 1000,
 })
