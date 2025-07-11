@@ -1,13 +1,24 @@
 import { Langfuse } from 'langfuse'
 import { LangfuseGenerationClient, LangfuseTraceClient } from 'langfuse'
-import { getLangfuseConfig } from './langfuse-client'
+import { getRuntimeConfig } from './get-runtime-config'
 
 // Initialize Langfuse client with runtime configuration
-const config = getLangfuseConfig()
+const config = getRuntimeConfig()
+
+// Debug logging
+if (typeof window === 'undefined') {
+  console.log('[Langfuse Init] Server-side configuration:', {
+    hasPublicKey: !!config.langfuse.publicKey,
+    hasSecretKey: !!config.langfuse.secretKey,
+    host: config.langfuse.host,
+    region: config.fly.region,
+  })
+}
+
 export const langfuse = new Langfuse({
-  publicKey: config.publicKey,
-  secretKey: config.secretKey,
-  baseUrl: config.baseUrl,
+  publicKey: config.langfuse.publicKey,
+  secretKey: config.langfuse.secretKey,
+  baseUrl: config.langfuse.host,
   flushAt: 1,
   flushInterval: 1000,
 })
